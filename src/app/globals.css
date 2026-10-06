@@ -1,0 +1,103 @@
+@import "tailwindcss";
+
+:root {
+  --background: #090d16;
+  --foreground: #f1f5f9;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* Accessible High-Contrast Guard: Enforce dark legible text on all inputs, selects, and textareas */
+input:not([type="checkbox"]):not([type="radio"]), 
+select, 
+textarea {
+  color: #0f172a !important; /* text-slate-900 */
+  background-color: #ffffff;
+}
+
+/* Ensure placeholder contrast */
+input::placeholder, textarea::placeholder {
+  color: #64748b !important; /* text-slate-500 */
+  opacity: 1;
+}
+
+/* Ensure select option texts are always dark text on light background */
+select option {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  font-weight: 500;
+  padding: 8px;
+}
+
+/* Focus styles for accessibility */
+input:focus, select:focus, textarea:focus {
+  outline: 2px solid #3b82f6 !important;
+  outline-offset: 1px;
+}
+
+/* Tabular numerals for industrial counts */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Ambient glow & glassmorphic utilities */
+.glass-panel {
+  background: rgba(15, 23, 42, 0.72);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.glass-panel-subtle {
+  background: rgba(30, 41, 59, 0.5);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-card-interactive {
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card-interactive:hover {
+  background: rgba(30, 41, 59, 0.75);
+  border-color: rgba(59, 130, 246, 0.4);
+  box-shadow: 0 12px 30px -10px rgba(59, 130, 246, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Clean smooth custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.5);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(100, 116, 139, 0.5);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.8);
+}
+
+/* Mobile touch targets - ensure minimum 44px on mobile buttons */
+@media (max-width: 640px) {
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
