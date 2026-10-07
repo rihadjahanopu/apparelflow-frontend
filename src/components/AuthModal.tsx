@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useAuthStore } from '../context/AuthStore';
 import { UserRole } from '../types';
-import { X, LogIn, UserPlus, KeyRound, Mail, Lock, UserCheck, ShieldCheck, Scissors, Factory } from 'lucide-react';
+import { X, LogIn, UserPlus, KeyRound, Mail, Lock, UserCheck, ShieldCheck, Scissors, Factory, Eye, EyeOff } from 'lucide-react';
 
 interface Props {
   isOpen: boolean;
@@ -19,11 +19,13 @@ export const AuthModal: React.FC<Props> = ({ isOpen, onClose, onSuccess }) => {
   // Login form
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
+  const [showLoginPassword, setShowLoginPassword] = useState(false);
 
   // Register form
   const [regFullName, setRegFullName] = useState('');
   const [regEmail, setRegEmail] = useState('');
   const [regPassword, setRegPassword] = useState('');
+  const [showRegPassword, setShowRegPassword] = useState(false);
   const [regRole, setRegRole] = useState<UserRole>('cutting_supervisor');
 
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
@@ -199,14 +201,29 @@ export const AuthModal: React.FC<Props> = ({ isOpen, onClose, onSuccess }) => {
                 <label className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">
                   Password
                 </label>
-                <input
-                  type="password"
-                  required
-                  value={loginPassword}
-                  onChange={(e) => setLoginPassword(e.target.value)}
-                  placeholder="••••••••"
-                  className="w-full bg-white text-slate-900 border border-slate-300 rounded-xl p-3 text-sm font-medium shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
+                <div className="relative">
+                  <input
+                    type={showLoginPassword ? 'text' : 'password'}
+                    required
+                    value={loginPassword}
+                    onChange={(e) => setLoginPassword(e.target.value)}
+                    placeholder="••••••••"
+                    className="w-full bg-white text-slate-900 border border-slate-300 rounded-xl pl-3 pr-11 py-3 text-sm font-medium shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowLoginPassword(!showLoginPassword)}
+                    className="absolute right-3 top-2.5 p-1 rounded-lg text-slate-500 hover:text-slate-800 transition-colors cursor-pointer"
+                    title={showLoginPassword ? 'Hide password' : 'Show password'}
+                    aria-label={showLoginPassword ? 'Hide password' : 'Show password'}
+                  >
+                    {showLoginPassword ? (
+                      <EyeOff className="w-4 h-4 text-slate-600" />
+                    ) : (
+                      <Eye className="w-4 h-4 text-slate-500" />
+                    )}
+                  </button>
+                </div>
               </div>
 
               {/* Quick Fill Preset Cards with visible credentials */}
@@ -318,15 +335,30 @@ export const AuthModal: React.FC<Props> = ({ isOpen, onClose, onSuccess }) => {
                 <label className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1">
                   Password (min 6 characters)
                 </label>
-                <input
-                  type="password"
-                  required
-                  minLength={6}
-                  value={regPassword}
-                  onChange={(e) => setRegPassword(e.target.value)}
-                  placeholder="••••••••"
-                  className="w-full bg-white text-slate-900 border border-slate-300 rounded-xl p-2.5 sm:p-3 text-sm font-medium shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
+                <div className="relative">
+                  <input
+                    type={showRegPassword ? 'text' : 'password'}
+                    required
+                    minLength={6}
+                    value={regPassword}
+                    onChange={(e) => setRegPassword(e.target.value)}
+                    placeholder="••••••••"
+                    className="w-full bg-white text-slate-900 border border-slate-300 rounded-xl pl-2.5 sm:pl-3 pr-11 py-2.5 sm:py-3 text-sm font-medium shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowRegPassword(!showRegPassword)}
+                    className="absolute right-3 top-2.5 p-1 rounded-lg text-slate-500 hover:text-slate-800 transition-colors cursor-pointer"
+                    title={showRegPassword ? 'Hide password' : 'Show password'}
+                    aria-label={showRegPassword ? 'Hide password' : 'Show password'}
+                  >
+                    {showRegPassword ? (
+                      <EyeOff className="w-4 h-4 text-slate-600" />
+                    ) : (
+                      <Eye className="w-4 h-4 text-slate-500" />
+                    )}
+                  </button>
+                </div>
               </div>
 
               <div>
