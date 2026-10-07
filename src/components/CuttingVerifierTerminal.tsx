@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import toast from 'react-hot-toast';
 import { CuttingOrder, ComponentTrafficStatus } from '../types';
 import { api } from '../services/api';
 import { useAuthStore } from '../context/AuthStore';
@@ -110,6 +111,7 @@ export const CuttingVerifierTerminal: React.FC<Props> = ({ orders, onOrderUpdate
       type: 'success',
       text: 'Quick-Matched: All component quantities synced to 100% BOM recipe expectation.',
     });
+    toast.success('Quick-Matched: All component counts synced to 100% BOM!');
   };
 
   // Save Physical Counts to API
@@ -127,12 +129,15 @@ export const CuttingVerifierTerminal: React.FC<Props> = ({ orders, onOrderUpdate
         type: 'success',
         text: 'Physical verification counts saved to database.',
       });
+      toast.success('Physical verification counts saved successfully!');
       onOrderUpdated();
     } catch (err: any) {
+      const msg = err.message || 'Failed to save counts.';
       setActionMessage({
         type: 'error',
-        text: err.message || 'Failed to save counts.',
+        text: msg,
       });
+      toast.error(msg);
     } finally {
       setIsSaving(false);
     }
@@ -158,13 +163,16 @@ export const CuttingVerifierTerminal: React.FC<Props> = ({ orders, onOrderUpdate
         type: 'success',
         text: `Batch Approved! Order ${res.order.order_no} cleared gatekeeper verification and released to Sewing Assembly Floor.`,
       });
+      toast.success(`Batch #${res.order.order_no} APPROVED & released to Sewing!`);
       onOrderUpdated();
     } catch (err: any) {
+      const msg = err.message || 'Approval blocked by Gatekeeper (RED Shortage Detected).';
       setActionMessage({
         type: 'error',
-        text: err.message || 'Approval blocked by Gatekeeper.',
+        text: msg,
         shortages: err.shortages,
       });
+      toast.error(msg);
     } finally {
       setIsApproving(false);
     }
@@ -186,12 +194,15 @@ export const CuttingVerifierTerminal: React.FC<Props> = ({ orders, onOrderUpdate
         type: 'success',
         text: `Batch ${res.order.order_no} REJECTED and returned to cutting supervisor with logged audit note.`,
       });
+      toast.error(`Batch #${res.order.order_no} REJECTED & sent back to supervisor.`);
       onOrderUpdated();
     } catch (err: any) {
+      const msg = err.message || 'Failed to reject batch.';
       setActionMessage({
         type: 'error',
-        text: err.message || 'Failed to reject batch.',
+        text: msg,
       });
+      toast.error(msg);
     }
   };
 

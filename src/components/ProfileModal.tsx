@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import toast from 'react-hot-toast';
 import { useAuthStore } from '../context/AuthStore';
 import {
   X,
@@ -109,6 +110,7 @@ export const ProfileModal: React.FC<Props> = ({ isOpen, onClose }) => {
       });
 
       setSuccessMsg('Profile settings updated successfully!');
+      toast.success('Profile settings updated successfully!');
       setCurrentPassword('');
       setNewPassword('');
       setConfirmPassword('');
@@ -118,7 +120,9 @@ export const ProfileModal: React.FC<Props> = ({ isOpen, onClose }) => {
         setSuccessMsg(null);
       }, 3000);
     } catch (err: any) {
-      setErrorMsg(err.message || 'Failed to update profile settings.');
+      const msg = err.message || 'Failed to update profile settings.';
+      setErrorMsg(msg);
+      toast.error(msg);
     } finally {
       setIsSubmitting(false);
     }

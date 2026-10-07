@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import toast from 'react-hot-toast';
 import { CuttingOrder } from '../types';
 import { api } from '../services/api';
 import { useAuthStore } from '../context/AuthStore';
@@ -37,10 +38,14 @@ export const SewingQueueView: React.FC<Props> = ({ queue, onQueueUpdated }) => {
       setErrorMsg(null);
 
       const res = await api.sewing.startSewing(orderId);
-      setSuccessMsg(res.message || `Batch ${orderNo} transitioned to active sewing floor assembly line!`);
+      const msg = res.message || `Batch #${orderNo} transitioned to active sewing floor assembly line!`;
+      setSuccessMsg(msg);
+      toast.success(msg);
       onQueueUpdated();
     } catch (err: any) {
-      setErrorMsg(err.message || 'Failed to start sewing.');
+      const msg = err.message || 'Failed to start sewing.';
+      setErrorMsg(msg);
+      toast.error(msg);
     } finally {
       setStartingId(null);
     }

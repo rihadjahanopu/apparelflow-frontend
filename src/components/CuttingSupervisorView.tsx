@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import toast from 'react-hot-toast';
 import { Recipe, CuttingOrder } from '../types';
 import { api } from '../services/api';
 import { useAuthStore } from '../context/AuthStore';
@@ -118,11 +119,14 @@ export const CuttingSupervisorView: React.FC<Props> = ({
       });
 
       setSuccessMsg(`Order ${res.order.order_no} created successfully and dispatched to Verifier Terminal!`);
+      toast.success(`Cutting order #${res.order.order_no} created & dispatched!`);
       // Generate new roll ID for next batch
       setFabricRollId(`ROLL-${Math.floor(1000 + Math.random() * 9000)}`);
       onOrderCreated();
     } catch (err: any) {
-      setApiError(err.message || 'Failed to create cutting order.');
+      const msg = err.message || 'Failed to create cutting order.';
+      setApiError(msg);
+      toast.error(msg);
     } finally {
       setIsSubmitting(false);
     }

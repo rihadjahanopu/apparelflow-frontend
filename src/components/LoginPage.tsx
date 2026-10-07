@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import toast from 'react-hot-toast';
 import { useAuthStore } from '../context/AuthStore';
 import { UserRole } from '../types';
 import {
@@ -49,6 +50,7 @@ export const LoginPage: React.FC<Props> = ({ onLoginSuccess }) => {
     setLoginEmail(email);
     setLoginPassword(pass);
     setErrorMsg(null);
+    toast('Demo credentials auto-filled!', { icon: '🔑' });
   };
 
   const handleLoginSubmit = async (e: React.FormEvent) => {
@@ -58,6 +60,7 @@ export const LoginPage: React.FC<Props> = ({ onLoginSuccess }) => {
 
     if (!loginEmail.trim() || !loginPassword.trim()) {
       setErrorMsg('Please enter both your email and password.');
+      toast.error('Please enter both email and password.');
       return;
     }
 
@@ -65,11 +68,14 @@ export const LoginPage: React.FC<Props> = ({ onLoginSuccess }) => {
       setIsSubmitting(true);
       await loginWithCredentials(loginEmail.trim(), loginPassword.trim());
       setSuccessMsg('Authentication certified. Accessing manufacturing terminal...');
+      toast.success('Authentication certified! Welcome to ApparelFlow ERP.');
       if (onLoginSuccess) {
         onLoginSuccess();
       }
     } catch (err: any) {
-      setErrorMsg(err.message || 'Invalid email or password. Please verify credentials.');
+      const msg = err.message || 'Invalid email or password. Please verify credentials.';
+      setErrorMsg(msg);
+      toast.error(msg);
     } finally {
       setIsSubmitting(false);
     }
@@ -81,12 +87,16 @@ export const LoginPage: React.FC<Props> = ({ onLoginSuccess }) => {
     setSuccessMsg(null);
 
     if (!regFullName.trim() || !regEmail.trim() || !regPassword.trim() || !regRole) {
-      setErrorMsg('Please complete all operator registration fields.');
+      const msg = 'Please complete all operator registration fields.';
+      setErrorMsg(msg);
+      toast.error(msg);
       return;
     }
 
     if (regPassword.length < 6) {
-      setErrorMsg('Password must be at least 6 characters long.');
+      const msg = 'Password must be at least 6 characters long.';
+      setErrorMsg(msg);
+      toast.error(msg);
       return;
     }
 
@@ -94,11 +104,14 @@ export const LoginPage: React.FC<Props> = ({ onLoginSuccess }) => {
       setIsSubmitting(true);
       await registerOperator(regEmail.trim(), regPassword.trim(), regFullName.trim(), regRole);
       setSuccessMsg('Operator registered successfully. Unlocking terminal...');
+      toast.success('Operator registered successfully! Terminal unlocked.');
       if (onLoginSuccess) {
         onLoginSuccess();
       }
     } catch (err: any) {
-      setErrorMsg(err.message || 'Registration failed. Email may already be in use.');
+      const msg = err.message || 'Registration failed. Email may already be in use.';
+      setErrorMsg(msg);
+      toast.error(msg);
     } finally {
       setIsSubmitting(false);
     }

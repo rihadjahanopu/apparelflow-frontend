@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
+import { ToastProvider } from '../components/ToastProvider';
 
 export const metadata: Metadata = {
   title: 'ApparelFlow ERP - Cutting Operations & Gatekeeper Verification Terminal',
@@ -21,6 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className="min-h-screen bg-[#080d19] text-slate-100 flex flex-col relative antialiased selection:bg-blue-500 selection:text-white">
+        <ToastProvider />
         {/* Ambient Glassmorphic Background Glow Orbs */}
         <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
           <div className="absolute -top-40 -left-40 w-96 sm:w-[500px] h-96 sm:h-[500px] bg-blue-600/20 rounded-full blur-[120px] mix-blend-screen" />

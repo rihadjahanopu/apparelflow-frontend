@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import toast from 'react-hot-toast';
 import { useAuthStore } from '../context/AuthStore';
 import { UserRole } from '../types';
 import { X, LogIn, UserPlus, KeyRound, Mail, Lock, UserCheck, ShieldCheck, Scissors, Factory, Eye, EyeOff } from 'lucide-react';
@@ -39,6 +40,7 @@ export const AuthModal: React.FC<Props> = ({ isOpen, onClose, onSuccess }) => {
     setLoginEmail(email);
     setLoginPassword(pass);
     setErrorMsg(null);
+    toast('Demo credentials auto-filled!', { icon: '🔑' });
   };
 
   const handleLoginSubmit = async (e: React.FormEvent) => {
@@ -48,6 +50,7 @@ export const AuthModal: React.FC<Props> = ({ isOpen, onClose, onSuccess }) => {
 
     if (!loginEmail.trim() || !loginPassword.trim()) {
       setErrorMsg('Please enter both email and password.');
+      toast.error('Please enter both email and password.');
       return;
     }
 
@@ -55,12 +58,15 @@ export const AuthModal: React.FC<Props> = ({ isOpen, onClose, onSuccess }) => {
       setIsSubmitting(true);
       await loginWithCredentials(loginEmail.trim(), loginPassword.trim());
       setSuccessMsg('Logged in successfully!');
+      toast.success('Logged in successfully! Welcome to terminal.');
       setTimeout(() => {
         onClose();
         if (onSuccess) onSuccess();
       }, 500);
     } catch (err: any) {
-      setErrorMsg(err.message || 'Invalid credentials.');
+      const msg = err.message || 'Invalid credentials.';
+      setErrorMsg(msg);
+      toast.error(msg);
     } finally {
       setIsSubmitting(false);
     }
@@ -72,12 +78,16 @@ export const AuthModal: React.FC<Props> = ({ isOpen, onClose, onSuccess }) => {
     setSuccessMsg(null);
 
     if (!regFullName.trim() || !regEmail.trim() || !regPassword.trim() || !regRole) {
-      setErrorMsg('Please fill in all registration fields.');
+      const msg = 'Please fill in all registration fields.';
+      setErrorMsg(msg);
+      toast.error(msg);
       return;
     }
 
     if (regPassword.length < 6) {
-      setErrorMsg('Password must be at least 6 characters long.');
+      const msg = 'Password must be at least 6 characters long.';
+      setErrorMsg(msg);
+      toast.error(msg);
       return;
     }
 
@@ -85,12 +95,15 @@ export const AuthModal: React.FC<Props> = ({ isOpen, onClose, onSuccess }) => {
       setIsSubmitting(true);
       await registerOperator(regEmail.trim(), regPassword.trim(), regFullName.trim(), regRole);
       setSuccessMsg('Account created and logged in successfully!');
+      toast.success('Account created and logged in successfully!');
       setTimeout(() => {
         onClose();
         if (onSuccess) onSuccess();
       }, 600);
     } catch (err: any) {
-      setErrorMsg(err.message || 'Failed to register account.');
+      const msg = err.message || 'Failed to register account.';
+      setErrorMsg(msg);
+      toast.error(msg);
     } finally {
       setIsSubmitting(false);
     }

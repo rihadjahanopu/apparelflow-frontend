@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
+import toast from 'react-hot-toast';
 import { useAuthStore } from '../context/AuthStore';
 import { UserRole } from '../types';
 import {
@@ -202,6 +203,7 @@ export const Header: React.FC<Props> = ({ onRefresh, isRefreshing }) => {
                             onClick={() => {
                               setIsMenuOpen(false);
                               onRefresh();
+                              toast.success('Floor data synchronized!');
                             }}
                             disabled={isRefreshing}
                             className="w-full flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-slate-200 hover:text-white hover:bg-slate-800/80 rounded-xl transition-all active:scale-[0.98] cursor-pointer text-left disabled:opacity-50"
@@ -224,6 +226,7 @@ export const Header: React.FC<Props> = ({ onRefresh, isRefreshing }) => {
                           onClick={() => {
                             setIsMenuOpen(false);
                             logout();
+                            toast('Operator logged out from terminal.', { icon: '👋' });
                           }}
                           className="w-full flex items-center gap-2.5 px-3 py-2 text-xs font-bold text-rose-300 hover:text-rose-100 hover:bg-rose-950/60 rounded-xl transition-all active:scale-[0.98] cursor-pointer text-left"
                           role="menuitem"

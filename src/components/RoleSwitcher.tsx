@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import toast from 'react-hot-toast';
 import { useAuthStore } from '../context/AuthStore';
 import { UserRole } from '../types';
 import { Scissors, ShieldCheck, Factory, Check, Sparkles, KeyRound } from 'lucide-react';
@@ -85,7 +86,10 @@ export const RoleSwitcher: React.FC = () => {
               <button
                 key={item.role}
                 type="button"
-                onClick={() => switchRole(item.role)}
+                onClick={async () => {
+                  await switchRole(item.role);
+                  toast.success(`Active station switched to ${item.title} (${item.name})`);
+                }}
                 disabled={isLoading}
                 aria-pressed={isActive}
                 className={`relative text-left p-3 sm:p-3.5 rounded-xl border backdrop-blur-md transition-all duration-200 flex flex-col justify-between cursor-pointer active:scale-[0.98] ${
