@@ -108,28 +108,28 @@ export const LoginPage: React.FC<Props> = ({ onLoginSuccess }) => {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-600/5 rounded-full blur-[150px] pointer-events-none" />
 
       {/* Top Industrial Header (Branding only) */}
-      <header className="w-full backdrop-blur-xl bg-slate-950/80 border-b border-white/10 px-4 sm:px-8 py-3.5 flex items-center justify-between z-10 shadow-md">
-        <div className="flex items-center gap-3">
-          <div className="p-2 sm:p-2.5 bg-gradient-to-tr from-blue-600 via-indigo-600 to-cyan-500 rounded-xl shadow-[0_0_20px_rgba(59,130,246,0.4)] text-white border border-white/20">
+      <header className="w-full backdrop-blur-xl bg-slate-950/80 border-b border-white/10 px-3 sm:px-8 h-14 sm:h-16 flex items-center justify-between z-10 shadow-md">
+        <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+          <div className="p-1.5 sm:p-2.5 bg-gradient-to-tr from-blue-600 via-indigo-600 to-cyan-500 rounded-xl shadow-[0_0_20px_rgba(59,130,246,0.4)] text-white border border-white/20 shrink-0">
             <Layers className="w-5 h-5 sm:w-6 sm:h-6" />
           </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="text-base sm:text-xl font-black tracking-tight text-white">
+          <div className="min-w-0">
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <span className="text-base sm:text-xl font-black tracking-tight text-white truncate">
                 ApparelFlow
               </span>
-              <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider bg-blue-500/10 text-cyan-300 border border-cyan-500/30 px-2 py-0.5 rounded-full">
+              <span className="text-[9px] sm:text-xs font-bold uppercase tracking-wider bg-blue-500/10 text-cyan-300 border border-cyan-500/30 px-1.5 sm:px-2 py-0.5 rounded-full shrink-0">
                 ERP v2.4
               </span>
             </div>
-            <div className="text-[10px] sm:text-xs text-slate-400 font-medium hidden sm:block">
+            <div className="text-[10px] sm:text-xs text-slate-400 font-medium hidden md:block truncate">
               Cutting Operations & Gatekeeper Verification Terminal
             </div>
           </div>
         </div>
 
-        <div className="flex items-center gap-2 font-mono text-[11px] text-slate-400 bg-slate-900/80 border border-slate-800 px-3 py-1.5 rounded-xl">
-          <ShieldAlert className="w-4 h-4 text-amber-400 shrink-0" />
+        <div className="flex items-center gap-1.5 sm:gap-2 font-mono text-[10px] sm:text-[11px] text-slate-400 bg-slate-900/80 border border-slate-800 px-2.5 sm:px-3 py-1.5 rounded-xl shrink-0">
+          <ShieldAlert className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400 shrink-0" />
           <span className="hidden sm:inline">Terminal Access Restricted: Authentication Required</span>
           <span className="sm:hidden text-amber-300 font-bold">Terminal Locked</span>
         </div>
